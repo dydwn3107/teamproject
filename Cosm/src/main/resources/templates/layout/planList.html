@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/layout/layout}">
+
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div layout:fragment="content" id="app">
+    	<table border="3">
+		<thead>
+			<tr>
+				<th>상품ID</th>
+				<th>이름</th>
+				<th>단가</th>
+				<th>담당자</th>
+				<th>등록일자</th>
+				<th>공급업체</th>
+			</tr>	
+		</thead>
+		<tbody>
+			<c:forEach items="${list }" var="proInfo">
+				<tr>
+					<td>${proInfo.productId }</td>
+					<td>${proInfo.productName }</td>
+					<td>${proInfo.productPrice }</td>
+					<c:choose>
+						<c:when test="${proInfo.managerId eq 'E201' }">
+							<td>김사원</td>
+						</c:when>
+						<c:when test="${proInfo.managerId eq 'E202' }">
+							<td>이대리</td>
+						</c:when>
+					</c:choose>	
+					<td><fmt:formatDate value="${proInfo.productDate }" pattern="yyyy/MM/dd"/> </td>
+					<td>${proInfo.company }</td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
+    
+    </div>
+</body>
+</html>
