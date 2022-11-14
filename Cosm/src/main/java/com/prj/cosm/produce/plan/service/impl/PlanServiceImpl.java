@@ -1,5 +1,6 @@
 package com.prj.cosm.produce.plan.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +12,13 @@ import com.prj.cosm.produce.plan.service.PlanVO;
 
 @Service
 public class PlanServiceImpl implements PlanService {
-	
+
 	@Autowired
 	PlanMapper mapper;
-	
+
 	@Override
 	public List<PlanVO> selectPlanList() {
-		// TODO Auto-generated method stub
-		return null;
+		return mapper.getPlanList();
 	}
 
 	@Override
