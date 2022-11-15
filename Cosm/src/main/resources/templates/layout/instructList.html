@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/layout/layout}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<link rel="stylesheet"
+	href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
+<link rel="stylesheet"
+	href="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css" />
+
+<script
+	src="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.js"></script>
+<script src="https://uicdn.toast.com/tui-grid/latest/tui-grid.js"></script>
+
+<!-- modal -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+	crossorigin="anonymous">
+<!-- JavaScript Bundle with Popper -->
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+	crossorigin="anonymous">
+    </script>
+</head>
+<body>
+	<div layout:fragment="content">
+		<h3>생산계획 리스트</h3>
+		<button type="button" class="btn btn-dark btn-sm"
+					data-bs-toggle="modal" data-bs-target="#requestModal"
+					style="float: right">생산지시 작성</button>
+		<div id="grid"></div>
+		
+		<hr style="width: 100%">
+		
+		<h3>생산지시 리스트</h3>
+		<div id="grid2"></div>
+		
+		<hr style="width: 100%">
+		
+		<h3>자재재고 현황</h3>
+		<div id="grid3"></div>
+		
+		<div class="modal fade" id="requestModal" tabindex="-1"
+					aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-l">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">생산지시 작성</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<form action="planInsert" method="post">
+								<div class="modal-body">
+									<div>
+										<div class="input-group mb-3">
+											<span class="input-group-text">생산지시번호</span> <input
+												type="text" class="form-control" id="planNoInput"
+												name="planNo" aria-label="Username"
+												aria-describedby="basic-addon1" readonly="readonly">
+										</div>
+
+										<div class="input-group mb-3">
+											<span class="input-group-text">최종생산지시량</span> <input
+												type="number" class="form-control" placeholder="생산량"
+												name="planQuantity" aria-label="Username"
+												aria-describedby="basic-addon2">
+										</div>
+
+										<div class="input-group mb-3">
+											<span class="input-group-text">시작일자</span> <input type="date"
+												class="form-control" placeholder="시작일자" name="planStart"
+												aria-label="Username" aria-describedby="basic-addon3">
+										</div>
+
+										<div class="input-group mb-3">
+											<span class="input-group-text">종료일자</span> <input type="date"
+												class="form-control" placeholder="종료일자" name="planEnd"
+												aria-label="Username" aria-describedby="basic-addon4">
+										</div>
+
+
+										<div class="input-group">
+											<span class="input-group-text">기타사항</span>
+											<textarea class="form-control" name="planEx"
+												aria-label="With textarea"></textarea>
+										</div>
+
+										<div id="requestModalGrid" style="width: 100%;"></div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="submit" class="btn btn-primary">등록</button>
+									<button type="button" class="btn btn-secondary"
+										data-bs-dismiss="modal">취소</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+		
+		
+		<script>
+		//ajax 연결로 생산계획리스트 가져오기
+		window.onload = function () {
+			
+				$.ajax({
+					url: "/plan",
+					method: "GET",
+					dataType: "JSON",
+					success: function (result) {
+
+						console.log(result);
+						for (let plan of result) {
+							plan.planStart = plan.planStart.substr(0, 10);
+							plan.planEnd = plan.planEnd.substr(0, 10);
+						}
+						grid.resetData(result);
+					},
+					error: function (reject) {
+						console.log(reject);
+					}
+				});
+			};
+		
+		// 생산계획 리스트 그리드
+		var grid = new tui.Grid({
+			el: document.getElementById('grid'),
+			rowHeaders: ['checkbox'],
+			minBodyHeight: 30,
+			pageOptions: {
+				useClient: true, // front에서만 페이징 하는 속성
+				perPage: 5
+			},
+			scrollX: false,
+			scrollY: false,
+			columns: [
+				{
+					header: '생산계획번호',
+					name: 'planNo',
+					filter: {
+					       type: 'select',
+					        showApplyBtn: true,
+					        showClearBtn: true
+					      },
+				},
+				{
+					header: '생산량',
+					name: 'planQuantity',
+				},
+				{
+					header: '시작일자(desc)',
+					name: 'planStart',
+					sortingType: 'desc',
+					sortable: true
+				},
+				{
+					header: '종료일자(desc)',
+					name: 'planEnd',
+					sortingType: 'desc',
+					sortable: true
+				},
+				{
+					header: '기타사항',
+					name: 'planEx',
+				},	
+				],
+			
+			});
+		// 생산지시 리스트 그리드
+		var grid2 = new tui.Grid({
+			el: document.getElementById('grid2'),
+			rowHeaders: ['checkbox'],
+			minBodyHeight: 30,
+			pageOptions: {
+				useClient: true, // front에서만 페이징 하는 속성
+				perPage: 5
+			},
+			scrollX: false,
+			scrollY: false,
+			columns: [
+				{
+					header: '생산지시번호',
+					name: 'planNo',
+				},
+				{
+					header: '생산계획번호',
+					name: 'planQuantity',
+				},
+				{
+					header: '생산최종지시량',
+					name: 'planQuantity',
+				},
+				{
+					header: '시작일자(desc)',
+					name: 'planStart',
+					sortingType: 'desc',
+					sortable: true
+				},
+				{
+					header: '종료일자(desc)',
+					name: 'planEnd',
+					sortingType: 'desc',
+					sortable: true
+				},
+				{
+					header: '투입될자재량',
+					name: 'planEx',
+				},	
+				{
+					header: '지시일자(desc)',
+					name: 'planStart',
+					sortingType: 'desc',
+					sortable: true
+				},
+				{
+					header: '진행상황',
+					name: 'planEx',
+				},	
+				{
+					header: '기타사항',
+					name: 'planEx',
+				},	
+				]
+			});
+		
+		// 자재재고 현황 그리드
+		var grid3 = new tui.Grid({
+			el: document.getElementById('grid3'),
+			rowHeaders: ['checkbox'],
+			minBodyHeight: 30,
+			pageOptions: {
+				useClient: true, // front에서만 페이징 하는 속성
+				perPage: 5
+			},
+			scrollX: false,
+			scrollY: false,
+			columns: [
+				{
+					header: '생산지시번호',
+					name: 'planNo',
+				},
+				{
+					header: '생산계획번호',
+					name: 'planQuantity',
+				},
+				{
+					header: '생산최종지시량',
+					name: 'planQuantity',
+				},
+				{
+					header: '시작일자(desc)',
+					name: 'planStart',
+					sortingType: 'desc',
+					sortable: true
+				},
+				{
+					header: '종료일자(desc)',
+					name: 'planEnd',
+					sortingType: 'desc',
+					sortable: true
+				},
+				{
+					header: '투입될자재량',
+					name: 'planEx',
+				},	
+				{
+					header: '지시일자(desc)',
+					name: 'planStart',
+					sortingType: 'desc',
+					sortable: true
+				},
+				{
+					header: '진행상황',
+					name: 'planEx',
+				},	
+				{
+					header: '기타사항',
+					name: 'planEx',
+				},	
+				]
+			});
+		</script>
+	</div>
+</body>
+</html>

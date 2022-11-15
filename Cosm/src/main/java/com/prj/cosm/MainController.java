@@ -74,5 +74,11 @@ public class MainController {
 		}
 		return "redirect:planList";
 	}
+	// 생산지시 페이지이동
+	@GetMapping("/instructList")
+	public String instructList(Model model) {
+		model.addAttribute("info", service.selectPlanNo());
+		return "layout/instructList";
+	}
 
 }
