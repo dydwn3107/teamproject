@@ -1,7 +1,8 @@
 package com.prj.cosm.produce.plan.service.impl;
 
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,20 +24,25 @@ public class PlanServiceImpl implements PlanService {
 
 	@Override
 	public PlanVO selectPlanNo() {
-		// TODO Auto-generated method stub
-		return null;
+		return mapper.getPlanNo();
 	}
 
 	@Override
 	public int insertPlanInfo(PlanVO planVO) {
-		// TODO Auto-generated method stub
-		return 0;
+		return mapper.insertPlan(planVO);
 	}
 
 	@Override
 	public int updatePlanInfo(PlanVO planVO) {
-		// TODO Auto-generated method stub
-		return 0;
+		return mapper.updatePlan(planVO);
 	}
+
+	@Override
+	public int deletePlanInfo(int planNo) {
+		return mapper.deletePlan(planNo);
+		
+	}
+
+	
 
 }

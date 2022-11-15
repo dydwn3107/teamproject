@@ -1,10 +1,12 @@
 package com.prj.cosm.produce.plan.service;
 
 import java.util.List;
+import java.util.Map;
 
 public interface PlanService {
-	//전체조회 
+	//생산계획 전체조회 
 	public List<PlanVO> selectPlanList();
+	
 	
 	//상세조회
 	public PlanVO selectPlanNo();
@@ -15,5 +17,7 @@ public interface PlanService {
 	//수정
 	public int updatePlanInfo(PlanVO planVO);
 	
+	//삭제
+	public int deletePlanInfo(int planNo);
 
 }
