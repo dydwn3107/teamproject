@@ -38,15 +38,13 @@
 
 		<!-- tab기능 -->
 		<div class="tabs">
-			<input id="all" type="radio" name="tab_item" checked> 
-			<label class="tab_item" for="all">생산계획</label> 
-			
-			<input id="programming" type="radio" name="tab_item"> 
-			<label class="tab_item" for="programming">BOM 정보</label> 
-			
+			<input id="all" type="radio" name="tab_item" checked>
+			<label class="tab_item" for="all">생산계획</label>
+			<input id="programming" type="radio" name="tab_item">
+			<label class="tab_item" for="programming" >BOM 정보</label>
 			<input id="design" type="radio" name="tab_item"> 
 			<label class="tab_item" for="design">제품 정보</label>
-			
+
 			<div class="tab_content" id="all_content">
 				<h3>미계획 주문서 리스트</h3>
 				<button type="button" class="btn btn-dark btn-sm"
@@ -66,141 +64,151 @@
 					수정</button>
 				<div id="grid"></div>
 			</div>
-				
-				<div class="tab_content" id="programming_content">
-					<h3>BOM 정보</h3>
-					<div id="grid3"></div>
-				</div>
-				<div class="tab_content" id="design_content">
-					<h3>제품 정보</h3>
-					<div id="grid4"></div>
-				</div>
+
+			<div class="tab_content" id="programming_content">
+				<h3>BOM 정보</h3>
+				<div id="grid3"></div>
+			</div>
+			<div class="tab_content" id="design_content">
+				<h3>제품 정보</h3>
+				<div id="grid4"></div>
+			</div>
 		</div>
-				
-				<!-- 생산계획 작성 모달 -->
-				<div class="modal fade" id="requestModal" tabindex="-1"
-					aria-labelledby="exampleModalLabel" aria-hidden="true">
-					<div class="modal-dialog modal-l">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLabel">생산계획서 작성</h5>
-								<button type="button" class="btn-close" data-bs-dismiss="modal"
-									aria-label="Close"></button>
-							</div>
-							<form action="planInsert" method="post">
-								<div class="modal-body">
-									<div>
-										<div class="input-group mb-3">
-											<span class="input-group-text">생산계획번호</span> <input
-												type="text" class="form-control" id="planNoInput"
-												name="planNo" aria-label="Username"
-												aria-describedby="basic-addon1" readonly="readonly">
-										</div>
 
-										<div class="input-group mb-3">
-											<span class="input-group-text">생산량</span> <input
-												type="number" class="form-control" placeholder="생산량"
-												name="planQuantity" aria-label="Username"
-												aria-describedby="basic-addon2">
-										</div>
-
-										<div class="input-group mb-3">
-											<span class="input-group-text">시작일자</span> <input type="date"
-												class="form-control" placeholder="시작일자" name="planStart"
-												aria-label="Username" aria-describedby="basic-addon3">
-										</div>
-
-										<div class="input-group mb-3">
-											<span class="input-group-text">종료일자</span> <input type="date"
-												class="form-control" placeholder="종료일자" name="planEnd"
-												aria-label="Username" aria-describedby="basic-addon4">
-										</div>
-
-
-										<div class="input-group">
-											<span class="input-group-text">기타사항</span>
-											<textarea class="form-control" name="planEx"
-												aria-label="With textarea"></textarea>
-										</div>
-
-										<div id="requestModalGrid" style="width: 100%;"></div>
-									</div>
-								</div>
-								<div class="modal-footer">
-									<button type="submit" class="btn btn-primary">등록</button>
-									<button type="button" class="btn btn-secondary"
-										data-bs-dismiss="modal">취소</button>
-								</div>
-							</form>
-						</div>
+		<!-- 생산계획 작성 모달 -->
+		<div class="modal fade" id="requestModal" tabindex="-1"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-l">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">생산계획서 작성</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
 					</div>
-				</div>
+					<form action="planInsert" method="post">
+						<div class="modal-body">
+							<div>
+								<div class="input-group mb-3">
+									<span class="input-group-text">생산계획번호</span> <input type="text"
+										class="form-control" id="planNoInput" name="planNo"
+										aria-label="Username" aria-describedby="basic-addon1"
+										readonly="readonly">
+								</div>
 
-				<!-- 생산계획 수정 모달 -->
-				<div class="modal fade" id="requestModala" tabindex="-1"
-					aria-labelledby="exampleModalLabel" aria-hidden="true">
-					<div class="modal-dialog modal-l">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLabel">생산계획서 수정</h5>
-								<button type="button" class="btn-close" data-bs-dismiss="modal"
-									aria-label="Close"></button>
+								<div class="input-group mb-3">
+									<span class="input-group-text">생산량</span> <input type="number"
+										class="form-control" placeholder="생산량" name="planQuantity"
+										aria-label="Username" aria-describedby="basic-addon2">
+								</div>
+
+								<div class="input-group mb-3">
+									<span class="input-group-text">시작일자</span> <input type="date"
+										class="form-control" placeholder="시작일자" name="planStart"
+										aria-label="Username" aria-describedby="basic-addon3">
+								</div>
+
+								<div class="input-group mb-3">
+									<span class="input-group-text">종료일자</span> <input type="date"
+										class="form-control" placeholder="종료일자" name="planEnd"
+										aria-label="Username" aria-describedby="basic-addon4">
+								</div>
+
+
+								<div class="input-group">
+									<span class="input-group-text">기타사항</span>
+									<textarea class="form-control" name="planEx"
+										aria-label="With textarea"></textarea>
+								</div>
+
+								<div id="requestModalGrid" style="width: 100%;"></div>
 							</div>
-							<form action="planUpdate" method="post">
-								<div class="modal-body">
-									<div>
-										<div class="input-group mb-3">
-											<span class="input-group-text">생산계획번호</span> <input
-												type="text" class="form-control" id="planNo" name="planNo"
-												aria-label="Username" aria-describedby="basic-addon1"
-												readonly="readonly">
-										</div>
-
-										<div class="input-group mb-3">
-											<span class="input-group-text">생산량</span> <input
-												type="number" class="form-control" id="planQuantity"
-												name="planQuantity" aria-label="Username"
-												aria-describedby="basic-addon2">
-										</div>
-
-										<div class="input-group mb-3">
-											<span class="input-group-text">시작일자</span> <input type="date"
-												class="form-control" placeholder="시작일자" name="planStart"
-												id="planStart" aria-label="Username"
-												aria-describedby="basic-addon3">
-										</div>
-
-										<div class="input-group mb-3">
-											<span class="input-group-text">종료일자</span> <input type="date"
-												class="form-control" placeholder="종료일자" name="planEnd"
-												id="planEnd" aria-label="Username"
-												aria-describedby="basic-addon4">
-										</div>
-
-
-										<div class="input-group">
-											<span class="input-group-text">기타사항</span>
-											<textarea class="form-control" name="planEx" id="planEx"
-												aria-label="With textarea"></textarea>
-										</div>
-
-										<div id="requestModalGrid" style="width: 100%;"></div>
-									</div>
-								</div>
-								<div class="modal-footer">
-									<button type="submit" class="btn btn-primary">수정</button>
-									<button type="button" class="btn btn-secondary"
-										data-bs-dismiss="modal">취소</button>
-								</div>
-							</form>
 						</div>
-					</div>
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-primary">등록</button>
+							<button type="button" class="btn btn-secondary"
+								data-bs-dismiss="modal">취소</button>
+						</div>
+					</form>
 				</div>
+			</div>
+		</div>
 
-			
-			
-		
+		<!-- 생산계획 수정 모달 -->
+		<div class="modal fade" id="requestModala" tabindex="-1"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-l">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">생산계획서 수정</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<form action="planUpdate" method="post">
+						<div class="modal-body">
+							<div>
+								<div class="input-group mb-3">
+									<span class="input-group-text">생산계획번호</span> <input type="text"
+										class="form-control" id="planNo" name="planNo"
+										aria-label="Username" aria-describedby="basic-addon1"
+										readonly="readonly">
+								</div>
+
+								<div class="input-group mb-3">
+									<span class="input-group-text">생산량</span> <input type="number"
+										class="form-control" id="planQuantity" name="planQuantity"
+										aria-label="Username" aria-describedby="basic-addon2">
+								</div>
+
+								<div class="input-group mb-3">
+									<span class="input-group-text">시작일자</span> <input type="date"
+										class="form-control" placeholder="시작일자" name="planStart"
+										id="planStart" aria-label="Username"
+										aria-describedby="basic-addon3">
+								</div>
+
+								<div class="input-group mb-3">
+									<span class="input-group-text">종료일자</span> <input type="date"
+										class="form-control" placeholder="종료일자" name="planEnd"
+										id="planEnd" aria-label="Username"
+										aria-describedby="basic-addon4">
+								</div>
+
+
+								<div class="input-group">
+									<span class="input-group-text">기타사항</span>
+									<textarea class="form-control" name="planEx" id="planEx"
+										aria-label="With textarea"></textarea>
+								</div>
+
+								<div id="requestModalGrid" style="width: 100%;"></div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-primary">수정</button>
+							<button type="button" class="btn btn-secondary"
+								data-bs-dismiss="modal">취소</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+
+
+
 		<script>
+		const selectMno = document.getElementById('programming');
+		selectMno.addEventListener('click',function(){
+			grid4.refreshLayout();
+			grid3.refreshLayout();
+			
+		})
+		const selectMno2 = document.getElementById('design');
+		selectMno2.addEventListener('click',function(){
+			grid4.refreshLayout();
+			grid3.refreshLayout();
+		})
+			
 			//수정
 			function updateData() {
 				var planData=[];
@@ -272,6 +280,7 @@
 				useClient: true, // front에서만 페이징 하는 속성
 				perPage: 5
 			},
+			
 			scrollX: false,
 			scrollY: false,
 			columns: [
@@ -350,8 +359,9 @@
 				]
 			});
 		
-		//주문서 리스트 그리드
+		//BOM 리스트 그리드
 		 var grid3 = new tui.Grid({
+			 
 			el: document.getElementById('grid3'),
 			rowHeaders: ['checkbox'],
 			minBodyHeight: 30,
@@ -359,6 +369,13 @@
 				useClient: true, // front에서만 페이징 하는 속성
 				perPage: 5
 			},
+			data : [{
+				planNo : '1',
+				planQuantity : '200',
+				planStart : '2022-03-03',
+				planEnd : '2022-08-08',
+				planEx : '안녕하세요'
+			}],
 			scrollX: false,
 			scrollY: false,
 			columns: [
@@ -395,10 +412,10 @@
 					name: 'planEx',
 				}
 				
-				]
+				] 
 			});
 		
-		//주문서 리스트 그리드
+		//제품정보 리스트 그리드
 		 var grid4 = new tui.Grid({
 			el: document.getElementById('grid4'),
 			rowHeaders: ['checkbox'],

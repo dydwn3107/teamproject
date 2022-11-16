@@ -31,83 +31,234 @@
 <body>
 	<div layout:fragment="content">
 		<h3>생산계획 리스트</h3>
-		<button type="button" class="btn btn-dark btn-sm"
-					data-bs-toggle="modal" data-bs-target="#requestModal"
-					style="float: right">생산지시 작성</button>
+		<button type="button" class="btn btn-dark btn-sm" onclick="insertData();"
+			data-bs-toggle="modal" data-bs-target="#requestModal"
+			style="float: right">생산지시 작성</button>
 		<div id="grid"></div>
-		
+
 		<hr style="width: 100%">
-		
+
 		<h3>생산지시 리스트</h3>
+		<button type="button" onclick="deleteData();"
+			class="btn btn-dark btn-sm" style="float: right" id="deleteBtn">생산지시
+			삭제</button>
+		<button type="button" onclick="updateData();"
+			class="btn btn-dark btn-sm" data-bs-toggle="modal"
+			data-bs-target="#requestModala" style="float: right">생산지시 수정</button>
 		<div id="grid2"></div>
-		
+
 		<hr style="width: 100%">
-		
+
 		<h3>자재재고 현황</h3>
 		<div id="grid3"></div>
-		
+
+		<!-- 생산지시 작성 모달 -->
 		<div class="modal fade" id="requestModal" tabindex="-1"
-					aria-labelledby="exampleModalLabel" aria-hidden="true">
-					<div class="modal-dialog modal-l">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLabel">생산지시 작성</h5>
-								<button type="button" class="btn-close" data-bs-dismiss="modal"
-									aria-label="Close"></button>
-							</div>
-							<form action="planInsert" method="post">
-								<div class="modal-body">
-									<div>
-										<div class="input-group mb-3">
-											<span class="input-group-text">생산지시번호</span> <input
-												type="text" class="form-control" id="planNoInput"
-												name="planNo" aria-label="Username"
-												aria-describedby="basic-addon1" readonly="readonly">
-										</div>
-
-										<div class="input-group mb-3">
-											<span class="input-group-text">최종생산지시량</span> <input
-												type="number" class="form-control" placeholder="생산량"
-												name="planQuantity" aria-label="Username"
-												aria-describedby="basic-addon2">
-										</div>
-
-										<div class="input-group mb-3">
-											<span class="input-group-text">시작일자</span> <input type="date"
-												class="form-control" placeholder="시작일자" name="planStart"
-												aria-label="Username" aria-describedby="basic-addon3">
-										</div>
-
-										<div class="input-group mb-3">
-											<span class="input-group-text">종료일자</span> <input type="date"
-												class="form-control" placeholder="종료일자" name="planEnd"
-												aria-label="Username" aria-describedby="basic-addon4">
-										</div>
-
-
-										<div class="input-group">
-											<span class="input-group-text">기타사항</span>
-											<textarea class="form-control" name="planEx"
-												aria-label="With textarea"></textarea>
-										</div>
-
-										<div id="requestModalGrid" style="width: 100%;"></div>
-									</div>
-								</div>
-								<div class="modal-footer">
-									<button type="submit" class="btn btn-primary">등록</button>
-									<button type="button" class="btn btn-secondary"
-										data-bs-dismiss="modal">취소</button>
-								</div>
-							</form>
-						</div>
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-l">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">생산지시 작성</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
 					</div>
+					<form action="insInsert" method="post">
+						<div class="modal-body">
+							<div>
+								<div class="input-group mb-3">
+									<span class="input-group-text">생산지시번호</span> <input type="number"
+										class="form-control" id="planNoInput" name="instructNo"
+										aria-label="Username" aria-describedby="basic-addon1"
+										readonly="readonly">
+								</div>
+								
+								<div class="input-group mb-3">
+									<span class="input-group-text">지시될 생산계획번호</span> <input type="number"
+										class="form-control" id="instructPlanNo" name="instructPlanNo"
+										aria-label="Username" aria-describedby="basic-addon1"
+										readonly="readonly">
+								</div>
+
+								<div class="input-group mb-3">
+									<span class="input-group-text">최종생산지시량</span> <input
+										type="number" class="form-control" placeholder="생산량"
+										name="instructQuantity" aria-label="Username"
+										aria-describedby="basic-addon2">
+								</div>
+
+								<div class="input-group mb-3">
+									<span class="input-group-text">시작일자</span> <input type="date"
+										class="form-control" placeholder="시작일자" 
+										id="planStart" readonly="readonly" aria-label="Username"
+										aria-describedby="basic-addon3">
+								</div>
+
+								<div class="input-group mb-3">
+									<span class="input-group-text">종료일자</span> <input type="date"
+										class="form-control" placeholder="종료일자" 
+										id="planEnd" readonly="readonly"
+										aria-label="Username" aria-describedby="basic-addon4">
+								</div>
+
+								<div class="input-group mb-3">
+									<span class="input-group-text">지시일자</span> <input type="date"
+										class="form-control" placeholder="지시일자" name="instructDate"
+										
+										aria-label="Username" aria-describedby="basic-addon4">
+								</div>
+
+								<div class="input-group mb-3">
+									<span class="input-group-text">자재번호</span> <input type="number"
+										class="form-control" placeholder="자재번호" name="instructMNo"
+										aria-label="Username" aria-describedby="basic-addon4">
+								</div>
+								
+								<div class="input-group mb-3">
+									<span class="input-group-text">진행상황</span> <input type="text"
+										class="form-control" placeholder="진행상황" name="instructProgressCode"
+										aria-label="Username" aria-describedby="basic-addon4">
+								</div>
+
+								<div class="input-group">
+									<span class="input-group-text">기타사항</span>
+									<textarea class="form-control" name="instructEx"
+										aria-label="With textarea"></textarea>
+								</div>
+
+								<div id="requestModalGrid" style="width: 100%;"></div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-primary">등록</button>
+							<button type="button" class="btn btn-secondary"
+								data-bs-dismiss="modal">취소</button>
+						</div>
+					</form>
 				</div>
+			</div>
+		</div>
 		
-		
+		<!-- 생산지시 수정 모달 -->
+		<div class="modal fade" id="requestModala" tabindex="-1"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-l">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">생산지시 수정</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<form action="insUpdate" method="post">
+						<div class="modal-body">
+							<div>
+								<div class="input-group mb-3">
+									<span class="input-group-text">생산지시번호</span> <input type="text"
+										class="form-control" id="instructNo" name="instructNo" 
+										aria-label="Username" aria-describedby="basic-addon1"
+										readonly="readonly">
+								</div>
+
+								<div class="input-group mb-3">
+									<span class="input-group-text">생산계획번호</span> <input type="number"
+										class="form-control" id="planNo" name="planNo"
+										aria-label="Username" aria-describedby="basic-addon2"
+										readonly="readonly">
+								</div>
+								
+								<div class="input-group mb-3">
+									<span class="input-group-text">최종생산지시량</span> <input
+										type="number" class="form-control" placeholder="생산량"
+										name="instructQuantity" aria-label="Username"
+										aria-describedby="basic-addon2">
+								</div>
+								
+								<div class="input-group mb-3">
+									<span class="input-group-text">시작일자</span> <input type="date"
+										class="form-control" placeholder="시작일자" name="planStart"
+										id="planStart2" aria-label="Username" readonly="readonly"
+										aria-describedby="basic-addon3">
+								</div>
+
+								<div class="input-group mb-3">
+									<span class="input-group-text">종료일자</span> <input type="date"
+										class="form-control" placeholder="종료일자" name="planEnd"
+										id="planEnd2" aria-label="Username" readonly="readonly"
+										aria-describedby="basic-addon4">
+								</div>
+								
+								<div class="input-group mb-3">
+									<span class="input-group-text">자재번호</span> <input type="number"
+										class="form-control" placeholder="자재번호" name="instructMNo"
+										aria-label="Username" aria-describedby="basic-addon4">
+								</div>
+
+								<div class="input-group">
+									<span class="input-group-text">기타사항</span>
+									<textarea class="form-control" name="instructEx" id="instructEx"
+										aria-label="With textarea"></textarea>
+								</div>
+
+								<div id="requestModalGrid" style="width: 100%;"></div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-primary">수정</button>
+							<button type="button" class="btn btn-secondary"
+								data-bs-dismiss="modal">취소</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+
 		<script>
+		// 지시 등록
+		function insertData(){
+			var datas = grid.getCheckedRows();
+			var test = JSON.stringify(datas);
+			$('#planStart').val(datas[0].planStart);
+			$('#planEnd').val(datas[0].planEnd);
+			$('#instructPlanNo').val(datas[0].planNo);
+		}
+		// 지시 수정
+		function updateData(){
+			
+			var datas1 = grid2.getCheckedRows();
+			var test = JSON.stringify(datas1);
+			$('#planNo').val(datas1[0].PLANNO);
+			$('#instructNo').val(datas1[0].INSTRUCTNO);
+			$('#planStart2').val(datas1[0].PLANSTART);
+			$('#planEnd2').val(datas1[0].PLANEND);
+			$('#instructPlanNo').val(datas1[0].PLANNO);
+		}
+		// 삭제 
+		function deleteData() {
+			var datas2 = grid2.getCheckedRows();
+			var test = JSON.stringify(datas2);
+
+			for(instruct of datas2){
+			$.ajax({
+				url : 'insDelete',
+				type : 'get',
+				data : {instructNo : instruct.INSTRUCTNO},
+				success : function(data){
+					console.log(data);
+					location.reload();
+				},
+				error : function(reject){
+					console.log(reject);
+				}
+			});
+			}
+			
+		}
+		
 		//ajax 연결로 생산계획리스트 가져오기
 		window.onload = function () {
+			// 생산지시번호 +1 로 등록
+			var info = '[[${info.instructNo}]]';
+			$('#planNoInput').val(info)	
 			
 				$.ajax({
 					url: "/plan",
@@ -115,7 +266,7 @@
 					dataType: "JSON",
 					success: function (result) {
 
-						console.log(result);
+					
 						for (let plan of result) {
 							plan.planStart = plan.planStart.substr(0, 10);
 							plan.planEnd = plan.planEnd.substr(0, 10);
@@ -126,8 +277,31 @@
 						console.log(reject);
 					}
 				});
+		//ajax 연결로 생산지시리스트 가져오기
+				$.ajax({
+					url: "/instruct",
+					method: "GET",
+					dataType: "JSON",
+					success: function (result) {
+
+						console.log(result);
+						for (let plan of result) {
+							plan.PLANSTART = String(plan.PLANSTART).substr(0, 10);
+							plan.PLANEND = String(plan.PLANEND).substr(0, 10);
+							plan.INSTRUCTDATE = String(plan.INSTRUCTDATE).substr(0, 10);
+						}
+						
+						grid2.resetData(result);
+					},
+					error: function (reject) {
+						console.log(reject);
+					}
+				});
 			};
 		
+		
+			
+			
 		// 생산계획 리스트 그리드
 		var grid = new tui.Grid({
 			el: document.getElementById('grid'),
@@ -186,45 +360,45 @@
 			columns: [
 				{
 					header: '생산지시번호',
-					name: 'planNo',
+					name: 'INSTRUCTNO'
 				},
 				{
 					header: '생산계획번호',
-					name: 'planQuantity',
+					name: 'PLANNO'
 				},
 				{
 					header: '생산최종지시량',
-					name: 'planQuantity',
+					name: 'INSTRUCTQUANTITY'
 				},
 				{
 					header: '시작일자(desc)',
-					name: 'planStart',
+					name: 'PLANSTART',
 					sortingType: 'desc',
 					sortable: true
 				},
 				{
 					header: '종료일자(desc)',
-					name: 'planEnd',
+					name: 'PLANEND',
 					sortingType: 'desc',
 					sortable: true
 				},
 				{
-					header: '투입될자재량',
-					name: 'planEx',
+					header: '자재번호',
+					name: 'INSTRUCTMNO'
 				},	
 				{
 					header: '지시일자(desc)',
-					name: 'planStart',
+					name: 'INSTRUCTDATE',
 					sortingType: 'desc',
 					sortable: true
 				},
 				{
 					header: '진행상황',
-					name: 'planEx',
+					name: 'INSTRUCTPROGRESSCODE'
 				},	
 				{
 					header: '기타사항',
-					name: 'planEx',
+					name: 'INSTRUCTEX'
 				},	
 				]
 			});

@@ -8,7 +8,7 @@ public interface PlanService {
 	public List<PlanVO> selectPlanList();
 	
 	
-	//상세조회
+	//생산계획 번호
 	public PlanVO selectPlanNo();
 	
 	//등록
